@@ -112,21 +112,23 @@ fun QuizScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Button(
-                    onClick = {
-                        // Переход к следующему вопросу, если ответили
-                        if (isAnswered) {
-                            currentIndex++
-                            isAnswered = false
-                        }
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
+            // Кнопка NEXT скрывается, если это последний вопрос
+            if (currentIndex < questions.size - 1) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
                 ) {
-                    Text("NEXT >", color = Color.White)
+                    Button(
+                        onClick = {
+                            if (isAnswered) {
+                                currentIndex++
+                                isAnswered = false
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
+                    ) {
+                        Text("NEXT >", color = Color.White)
+                    }
                 }
             }
         }
