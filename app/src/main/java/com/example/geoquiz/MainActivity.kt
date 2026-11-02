@@ -14,10 +14,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -62,12 +64,18 @@ fun QuizScreen(modifier: Modifier = Modifier) {
     var currentIndex by remember { mutableIntStateOf(0) }
     var isAnswered by remember { mutableStateOf(false) }
     var score by remember { mutableIntStateOf(0) }
+    // Новое состояние для показа окна с результатами
+    var showResultDialog by remember { mutableStateOf(false) }
 
     val checkAnswer = { userAnswer: Boolean ->
         if (!isAnswered) {
             isAnswered = true
             if (userAnswer == questions[currentIndex].answer) {
                 score++
+            }
+            // Если это был последний вопрос — показываем диалог
+            if (currentIndex == questions.size - 1) {
+                showResultDialog = true
             }
         }
     }
@@ -112,7 +120,6 @@ fun QuizScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Кнопка NEXT скрывается, если это последний вопрос
             if (currentIndex < questions.size - 1) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -132,6 +139,28 @@ fun QuizScreen(modifier: Modifier = Modifier) {
                 }
             }
         }
+    }
+
+    // Всплывающее окно с результатом
+    if (showResultDialog) {
+        AlertDialog(
+            onDismissRequest = { /* Запрещаем закрывать окно кликом мимо */ },
+            title = { Text("Тест завершен!") },
+            text = { Text("Ваш результат: $score из ${questions.size}") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        // Сбрасываем игру заново
+                        showResultDialog = false
+                        currentIndex = 0
+                        isAnswered = false
+                        score = 0
+                    }
+                ) {
+                    Text("Начать заново")
+                }
+            }
+        )
     }
 }
 
