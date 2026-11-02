@@ -88,7 +88,6 @@ fun QuizScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Показываем кнопки ТОЛЬКО если еще не ответили
             if (!isAnswered) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -108,7 +107,6 @@ fun QuizScreen(modifier: Modifier = Modifier) {
                     }
                 }
             } else {
-                // Заглушка, чтобы верстка не прыгала
                 Spacer(modifier = Modifier.height(48.dp))
             }
 
@@ -119,7 +117,13 @@ fun QuizScreen(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-                    onClick = { /* Логика позже */ },
+                    onClick = {
+                        // Переход к следующему вопросу, если ответили
+                        if (isAnswered) {
+                            currentIndex++
+                            isAnswered = false
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
                 ) {
                     Text("NEXT >", color = Color.White)
