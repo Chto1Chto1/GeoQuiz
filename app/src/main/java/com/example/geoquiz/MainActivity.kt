@@ -63,7 +63,6 @@ fun QuizScreen(modifier: Modifier = Modifier) {
     var isAnswered by remember { mutableStateOf(false) }
     var score by remember { mutableIntStateOf(0) }
 
-    // Функция проверки ответа
     val checkAnswer = { userAnswer: Boolean ->
         if (!isAnswered) {
             isAnswered = true
@@ -89,22 +88,28 @@ fun QuizScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Button(
-                    onClick = { checkAnswer(true) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
+            // Показываем кнопки ТОЛЬКО если еще не ответили
+            if (!isAnswered) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("TRUE", color = Color.White)
+                    Button(
+                        onClick = { checkAnswer(true) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
+                    ) {
+                        Text("TRUE", color = Color.White)
+                    }
+                    Button(
+                        onClick = { checkAnswer(false) },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
+                    ) {
+                        Text("FALSE", color = Color.White)
+                    }
                 }
-                Button(
-                    onClick = { checkAnswer(false) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
-                ) {
-                    Text("FALSE", color = Color.White)
-                }
+            } else {
+                // Заглушка, чтобы верстка не прыгала
+                Spacer(modifier = Modifier.height(48.dp))
             }
 
             Spacer(modifier = Modifier.height(24.dp))
