@@ -63,6 +63,16 @@ fun QuizScreen(modifier: Modifier = Modifier) {
     var isAnswered by remember { mutableStateOf(false) }
     var score by remember { mutableIntStateOf(0) }
 
+    // Функция проверки ответа
+    val checkAnswer = { userAnswer: Boolean ->
+        if (!isAnswered) {
+            isAnswered = true
+            if (userAnswer == questions[currentIndex].answer) {
+                score++
+            }
+        }
+    }
+
     Column(modifier = modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
@@ -84,13 +94,13 @@ fun QuizScreen(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Button(
-                    onClick = { /* Логика позже */ },
+                    onClick = { checkAnswer(true) },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
                 ) {
                     Text("TRUE", color = Color.White)
                 }
                 Button(
-                    onClick = { /* Логика позже */ },
+                    onClick = { checkAnswer(false) },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
                 ) {
                     Text("FALSE", color = Color.White)
@@ -99,7 +109,6 @@ fun QuizScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Кнопка NEXT
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
