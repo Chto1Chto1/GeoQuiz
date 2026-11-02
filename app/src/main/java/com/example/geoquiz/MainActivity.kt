@@ -79,7 +79,6 @@ fun QuizScreen(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Кнопки True и False
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -95,6 +94,21 @@ fun QuizScreen(modifier: Modifier = Modifier) {
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
                 ) {
                     Text("FALSE", color = Color.White)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Кнопка NEXT
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Button(
+                    onClick = { /* Логика позже */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
+                ) {
+                    Text("NEXT >", color = Color.White)
                 }
             }
         }
