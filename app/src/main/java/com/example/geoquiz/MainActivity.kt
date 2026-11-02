@@ -5,13 +5,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,28 +64,39 @@ fun QuizScreen(modifier: Modifier = Modifier) {
     var score by remember { mutableIntStateOf(0) }
 
     Column(modifier = modifier.fillMaxSize()) {
-        // Заголовок
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color(0xFF6200EE))
                 .padding(16.dp)
         ) {
-            Text(
-                text = "GeoQuiz",
-                color = Color.White,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
+            Text("GeoQuiz", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
         }
 
-        // Контент
         Column(modifier = Modifier.padding(16.dp)) {
             Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = questions[currentIndex].text,
-                fontSize = 20.sp
-            )
+            Text(text = questions[currentIndex].text, fontSize = 20.sp)
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Кнопки True и False
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(
+                    onClick = { /* Логика позже */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
+                ) {
+                    Text("TRUE", color = Color.White)
+                }
+                Button(
+                    onClick = { /* Логика позже */ },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
+                ) {
+                    Text("FALSE", color = Color.White)
+                }
+            }
         }
     }
 }
